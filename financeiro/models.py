@@ -21,7 +21,7 @@ class Conta(models.Model):
 	forma_pagamento = models.CharField(max_length=200)
 	nome = models.CharField(max_length=200)
 	cpf = models.CharField(max_length=200)
-	conclusao = models.DateTimeField()
+	conclusao = models.DateTimeField(null=True, blank=True, default = None)
 	conta = models.CharField(max_length=200)
 	agencia = models.CharField(max_length=200)
 	banco = models.CharField(max_length=200)

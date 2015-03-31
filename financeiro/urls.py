@@ -3,7 +3,6 @@ from financeiro import views
 
 
 urlpatterns = patterns('',
-    url(r'^$', views.brunao, name='brunao'),
-    url(r'^CadastroConta/', views.CadastroConta.as_view(), name='CadastroConta'),
+    url(r'^cadastroconta/', views.CadastroConta.as_view(), name='CadastroConta'),
 )
 
