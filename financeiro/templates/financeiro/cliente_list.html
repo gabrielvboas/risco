@@ -1,0 +1,28 @@
+<!-- O nome dessa pagina HTML tem que ser cliente_list, não sei como fazer funcionar com outro nome. André	-->
+
+{% block content %}
+        <h1>Lista de Clientes</h1>
+
+                <table>
+                        <tr>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>CNPJ</th>
+                                <th>Agencia</th>
+                                <th>Conta</th>
+                                <th>Banco</th>
+                        </tr>
+                {% for nome in object_list %}
+                        <tr>
+                                <td>{{ nome.nome }}</td>
+                                <td>{{ nome.tipo }}</td>
+                                <td>{{ nome.cnpj }}</td>
+                                <td>{{ nome.agencia }}</td>
+                                <td>{{ nome.conta }}</td>
+                                <td>{{ nome.banco }}</td>
+                        </tr>
+                {% empty %}
+                        <li>Sem itens na lista.</li>
+                {% endfor %}
+                </table>
+{% endblock content %}

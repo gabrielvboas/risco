@@ -30,3 +30,23 @@ class Conta(models.Model):
 	def __str__(self):
 		return self.nome + "_" + str(self.id) + "_" + self.vencimento.strftime('%d/%m/%y')
 
+class Cliente(models.Model):
+	ALIMENTICIO = 'ALIMENTICIO'
+	MANUTENCAO = 'MANUTENCAO'
+	TRIVIAL = 'TRIVIAL'
+
+	TYPES = (
+		(ALIMENTICIO, "Alimenticio"),
+		(MANUTENCAO, "Manutencao"),
+		(TRIVIAL, "Trivial"),
+		)
+	tipo = models.CharField(choices=TYPES, max_length=50)
+	nome = models.CharField(max_length=200)
+	cnpj = models.CharField(max_length=200)
+	conta = models.CharField(max_length=200)
+	agencia = models.CharField(max_length=200)
+	banco = models.CharField(max_length=200)
+	id_relatorio = models.ForeignKey(Relatorio, null=True, blank=True, default = None)
+	
+	def __str__(self):
+		return self.nome + "_" + str(self.id) + "_" + self.vencimento.strftime('%d/%m/%y')
