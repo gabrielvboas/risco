@@ -1,0 +1,9 @@
+<form action="/financeiro/cadastrocliente/" method="post">
+    {% csrf_token %}
+    {{ form.as_p  }}
+    <input type="submit" value="Submit" />
+</form>
+
+{% if form.errors %}
+	<h1>Erro na validação</h1>
+{% endif %}
