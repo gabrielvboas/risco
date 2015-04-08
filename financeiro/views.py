@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.views.generic import FormView, UpdateView
@@ -11,28 +11,6 @@ from financeiro.models import Conta
 from financeiro.models import Cliente
 from datetime import datetime
 
-from django.views.generic import View
-
-
-
-class json(RedirectView):
-    url = reverse_lazy("financeiro:list_conta") # Url para redirecionamento
-
-    def get_redirect_url(self, *args, **kwargs):
-        pk_url_kwarg = self.kwargs['pk']
-
-        conta = Conta.objects.filter(pk=pk_url_kwarg)[0]
-
-        conta.conclusao = datetime.now()
-
-        conta.save()
-
-        return super(ConcluirConta, self).get_redirect_url(*args, **kwargs)
-    
-    def get(self, request):
-        return JsonResponse({'teste':'teste'})
-
-#    
 #import pdb; pdb.set_trace()
 
 class CadastroConta(FormView):
