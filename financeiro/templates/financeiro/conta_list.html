@@ -3,6 +3,7 @@
 {% block content %}
         <h1>Lista de Contas</h1>
 
+                {% if object_list %}
                 <table>
                         <tr>
                                 <th>Nome</th>
@@ -15,22 +16,32 @@
                                 <th>Conta</th>
                                 <th>Agencia</th>
                                 <th>Banco</th>
+                                <th>Conclusão</th>
+                                <th>Opções</th>
                         </tr>
+                {% endif %}
                 {% for nome in object_list %}
                         <tr>
                                 <td>{{ nome.nome }}</td>
                                 <td>{{ nome.tipo }}</td>
                                 <td>{{ nome.valor }}</td>
-                                <td>{{ nome.vencimento }}</td>
+                                <td>{{ nome.vencimento|date:"d/m/Y" }}</td>
                                 <td>{{ nome.forma_pagamento }}</td>
                                 <td>{{ nome.cpf }}</td>
                                 <td>{{ nome.conclusao }}</td>
                                 <td>{{ nome.conta }}</td>
                                 <td>{{ nome.agencia }}</td>
                                 <td>{{ nome.banco }}</td>
+                                <td>{% if nome.conclusao %}{{ nome.vencimento|date:"d/m/Y" }}
+                                {% else %} - {% endif %}</td>
+                                <td>
+                                        <a href="{% url 'financeiro:finalize_conta' pk=nome.pk %}">Concluir</a> 
+                                        <a href="{% url 'financeiro:edit_conta' pk=nome.pk %}">Editar</a>
+                                </td>
                         </tr>
                 {% empty %}
                         <li>Sem itens na lista.</li>
                 {% endfor %}
                 </table>
+                <p><a href="{% url 'financeiro:create_conta' %}">Adicionar</a></p>
 {% endblock content %}
