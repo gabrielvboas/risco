@@ -14,7 +14,7 @@ from datetime import datetime
 #import pdb; pdb.set_trace()
 
 class CadastroConta(FormView):
-    template_name = 'financeiro/cadastroconta.html'
+    template_name = 'financeiro/CadastroConta.html'
     form_class = CadastroContaForm 
     success_url = reverse_lazy('financeiro:create_conta')
 

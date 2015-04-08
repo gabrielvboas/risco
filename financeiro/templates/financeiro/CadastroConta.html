@@ -1,19 +1,43 @@
-<form action="" method="post">
-    {% csrf_token %}
-    {% for attr in form %}
-		{% if not attr.is_hidden %}
-			<div >
-			  <label >{{attr.label}}</label>
-			  <div >
-			  	{{attr}}
-			  </div>
-			</div>
-			<br/>
-		{% endif %}
-	{% endfor %}
-    <input type="submit" value="Submit" />
-</form>
+<html>
+<HEAD>
+    <!-- bootstrap -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-{% if form.errors %}
-	<h1>Erro na validação</h1>
-{% endif %}
+style
+
+#id_b
+</HEAD>
+
+<body>
+
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for attr in form %}
+            {% if not attr.is_hidden %}
+                <div >
+                  <label >{{attr.label}}</label>
+                <div class="bootstrapclasse37">
+                    {{attr}}
+                </div>
+                    
+                  
+                </div>
+                <br/>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Submit" />
+    </form>
+
+    {% if form.errors %}
+        <h1>Erro na validação</h1>
+    {% endif %}
+</body>
+
+
+
+</html>
