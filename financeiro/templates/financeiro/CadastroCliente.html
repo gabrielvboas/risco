@@ -1,7 +1,17 @@
-<form action="/financeiro/cadastrocliente/" method="post">
+<form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p  }}
-    <input type="submit" value="Submit" />
+    {% for attr in form %}
+		{% if not attr.is_hidden %}
+			<div >
+			  <label >{{attr.label}}</label>
+			  <div >
+			  	{{attr}}
+			  </div>
+			</div>
+			<br/>
+		{% endif %}
+	{% endfor %}
+    <input type="submit" value="Cadastrar" />
 </form>
 
 {% if form.errors %}
