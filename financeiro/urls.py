@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^listaconta', list.ListView.as_view(model=Conta), name='list_conta'),
     url(r'^editconta/(?P<pk>\d+)/$', views.EditarConta.as_view(), name='edit_conta'),
     url(r'^finalizeconta/(?P<pk>\d+)/$', views.ConcluirConta.as_view(), name='finalize_conta'),
+    url(r'^meujson/', views.json.as_view(), name='json'),
     #url(r'^cliente/(?P<pk>\d+)/$', detail.DetailView.as_view(model=Cliente))
 )
-
