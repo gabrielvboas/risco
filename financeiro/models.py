@@ -1,5 +1,23 @@
 from django.db import models
 
+class Validacao(models.Model):
+	RESERVA = 'RESERVA'
+	ESTOQUE = 'ESTOQUE'
+	GASTOCLIENTE = 'GASTOCLIENTE'
+	TYPES = (
+		(RESERVA, "Pagar"),
+		(ESTOQUE, "Estoque"),
+		(GASTOCLIENTE, "GastoCliente"),
+		)
+	tipo = models.CharField(choices=TYPES, max_length=50)
+	idObj = models.IntegerField(default=False)
+	#na vdd isso ser'a uma foreing key
+	validacao = models.BooleanField(default=False)
+	comentario = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.tipo + "_" + str(self.idObj) 
+
 class Relatorio(models.Model):
 	aprovado = models.BooleanField(default=False)
 	data = models.DateTimeField()
