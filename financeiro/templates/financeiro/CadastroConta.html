@@ -1,6 +1,16 @@
-<form action="/financeiro/cadastroconta/" method="post">
+<form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p  }}
+    {% for attr in form %}
+		{% if not attr.is_hidden %}
+			<div >
+			  <label >{{attr.label}}</label>
+			  <div >
+			  	{{attr}}
+			  </div>
+			</div>
+			<br/>
+		{% endif %}
+	{% endfor %}
     <input type="submit" value="Submit" />
 </form>
 
