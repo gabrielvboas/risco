@@ -118,7 +118,7 @@ class Reservation(models.Model)	:
 # Objetos serao instanciados atraves da comunicacao com o modulo "PEDREIRO HOTELS"
 # Receberemos uma lista com varias triplas: descricao do produto, valor, quantidade
 # Se a conta for aprovada/paga, deve ser instaciada uma conta a pagar
-# Deve ser enviada uma mensagem para o modulo "Pedreiro" informando a mudança de status
+# Deve ser enviada uma mensagem para o modulo "Pedreiro" informando a mudanca de status
 # Ou podemos simplesmente ignorar o status, e facilitar essa parte da logica
 class StockRequest(models.Model):
 
@@ -159,11 +159,11 @@ class ProductRequest(models.Model):
 # Informacao vira do modulo "GITT"
 # Caso ja exista reserva previa, basta atualizar o objeto conta do respectivo CPF
 # Caso nao exista reserva previa, deve ser instanciada uma nova conta a receber com essas informacoes
-class CheckInConfirmation(models.Model)
+class CheckInConfirmation(models.Model):
 	
 	nome = models.CharField(max_length=200)
 	cpf = models.CharField(max_length=200)
-	valor_estadia = models.IntegerField()	#não inclui a reserva, equivale aos 100%
+	valor_estadia = models.IntegerField()	#nao inclui a reserva, equivale aos 100%
 	data_check_in = models.DateTimeField(null=True, blank=True, default = None)
 	data_check_out = models.DateTimeField(null=True, blank=True, default = None)
 
