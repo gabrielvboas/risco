@@ -1,0 +1,22 @@
+<html>
+<body>
+<h1>iChina<h1>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<h1>Sistema Financeiro de Hotel<h1>
+
+<div>
+	<a href="{% url 'financeiro:criar_conta_pagar' %}">Cadastrar Conta A Pagar</a>
+</div>
+<div>
+	<a href="{% url 'financeiro:lista_conta_pagar' %}">Lista de Contas A Pagar</a>
+</div>
+<div>
+	<a href="{% url 'financeiro:criar_fornecedor' %}">Cadastrar Fornecedor</a>
+</div>
+<div>
+	<a href="{% url 'financeiro:lista_fornecedor' %}">Lista de Fornecedores</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% block content %}
+        <h1>Lista de Itens da Conta {{conta.pk}}</h1>
+
+                {% if items %}
+                <table>
+                        <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Quantidade</th>
+                        </tr>
+                {% endif %}
+                {% for items in items %}
+                        <tr>
+                                <td>{{ items.descricao }}</td>
+                                <td>{{ items.valor }}</td>
+                                <td>{{ items.quantidade }}</td>
+                        </tr>
+                {% empty %}
+                        <li>Sem itens na lista.</li>
+                {% endfor %}
+                </table>
+                <p><a href="{% url 'financeiro:lista_conta_pagar' %}">Retornar</a></p>
+{% endblock content %}

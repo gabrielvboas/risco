@@ -1,47 +1,44 @@
 <!-- O nome dessa pagina HTML tem que ser conta_list, não sei como fazer funcionar com outro nome. André	-->
 
 {% block content %}
-        <h1>Lista de Contas</h1>
+        <h1>Lista de Contas A Pagar</h1>
 
                 {% if object_list %}
                 <table>
                         <tr>
-                                <th>Nome</th>
+                                <th>Número</th>
                                 <th>Tipo</th>
                                 <th>Valor</th>
                                 <th>Vencimento</th>
-                                <th>Forma de Pagamento</th>
-                                <th>CPF</th>
-                                <th>Conclusão</th>
-                                <th>Conta</th>
-                                <th>Agencia</th>
-                                <th>Banco</th>
+                                <th>Fornecedor</th>
                                 <th>Conclusão</th>
                                 <th>Opções</th>
                         </tr>
                 {% endif %}
                 {% for nome in object_list %}
                         <tr>
-                                <td>{{ nome.nome }}</td>
+                                <td>{{ nome.id }}</td>
                                 <td>{{ nome.tipo }}</td>
                                 <td>{{ nome.valor }}</td>
                                 <td>{{ nome.vencimento|date:"d/m/Y" }}</td>
-                                <td>{{ nome.forma_pagamento }}</td>
-                                <td>{{ nome.cpf }}</td>
-                                <td>{{ nome.conclusao }}</td>
-                                <td>{{ nome.conta }}</td>
-                                <td>{{ nome.agencia }}</td>
-                                <td>{{ nome.banco }}</td>
+                                <td>{% if nome.fornecedor %} {{ nome.fornecedor.nome }} {% else %}-{% endif %}</td>
                                 <td>{% if nome.conclusao %}{{ nome.vencimento|date:"d/m/Y" }}
                                 {% else %} - {% endif %}</td>
                                 <td>
-                                        <a href="{% url 'financeiro:finalize_conta' pk=nome.pk %}">Concluir</a> 
-                                        <a href="{% url 'financeiro:edit_conta' pk=nome.pk %}">Editar</a>
+                                        {% if nome.tipo = 'OUTRAS' %}
+                                                <a href="{% url 'financeiro:concluir_conta' pk=nome.pk %}">Concluir</a>
+                                                {% if not nome.conclusao %}
+                                                        <a href="{% url 'financeiro:edita_conta_pagar' pk=nome.pk %}">Editar</a>
+                                                {% endif %}
+                                        {% else %}
+                                                <a href="{% url 'financeiro:itens_conta' pk=nome.pk %}">Ítens</a>
+                                        {% endif %}
                                 </td>
                         </tr>
                 {% empty %}
                         <li>Sem itens na lista.</li>
                 {% endfor %}
                 </table>
-                <p><a href="{% url 'financeiro:create_conta' %}">Adicionar</a></p>
+                <p><a href="{% url 'financeiro:criar_conta_pagar' %}">Adicionar</a></p>
+                <p><a href="{% url 'financeiro:initial' %}">Página inicial</a></p>
 {% endblock content %}

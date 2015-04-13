@@ -1,8 +1,9 @@
 <!-- O nome dessa pagina HTML tem que ser cliente_list, não sei como fazer funcionar com outro nome. André	-->
 
 {% block content %}
-        <h1>Lista de Clientes</h1>
+        <h1>Lista de Fornecedores</h1>
 
+                {% if object_list %}
                 <table>
                         <tr>
                                 <th>Nome</th>
@@ -11,7 +12,9 @@
                                 <th>Agencia</th>
                                 <th>Conta</th>
                                 <th>Banco</th>
+                                <th>Opções</th>
                         </tr>
+                {% endif %}
                 {% for nome in object_list %}
                         <tr>
                                 <td>{{ nome.nome }}</td>
@@ -20,9 +23,15 @@
                                 <td>{{ nome.agencia }}</td>
                                 <td>{{ nome.conta }}</td>
                                 <td>{{ nome.banco }}</td>
+                                <td>
+                                        <a href="{% url 'financeiro:edita_fornecedor' pk=nome.pk %}">Editar</a>
+                                        <a href="{% url 'financeiro:deleta_fornecedor' pk=nome.pk %}">Deletar</a>
+                                </td>
                         </tr>
                 {% empty %}
                         <li>Sem itens na lista.</li>
                 {% endfor %}
                 </table>
+                <p><a href="{% url 'financeiro:criar_fornecedor' %}">Adicionar</a></p>
+                <p><a href="{% url 'financeiro:initial' %}">Página inicial</a></p>
 {% endblock content %}
