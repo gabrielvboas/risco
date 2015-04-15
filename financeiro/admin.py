@@ -11,4 +11,4 @@ admin.site.register(CheckoutPayment)
 admin.site.register(CheckInConfirmation)
 admin.site.register(Reservation)
 admin.site.register(Fornecedor)
-
+admin.site.register(Validacao)

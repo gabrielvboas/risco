@@ -1,37 +1,65 @@
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext, loader
-from django.views.generic import FormView, UpdateView, TemplateView, ListView
+from django.views.generic import FormView, UpdateView, TemplateView, ListView, View
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.base import RedirectView
 
 from forms import * 
 from financeiro.models import *
 from datetime import datetime
+from models import Validacao
+import urllib2
+import json as ehojson
 
 from django.views.generic import View
 #import pdb; pdb.set_trace()
 
+def json(request, tipo):
+    a = ''
+    for obj in Validacao.objects.all():
+        if obj.tipo == tipo:
+            a = a + obj.to_JSON()
 
-class json(RedirectView):
-    url = reverse_lazy("financeiro:list_conta") # Url para redirecionamento
+    return JsonResponse(a, safe=False)
 
-    def get_redirect_url(self, *args, **kwargs):
-        pk_url_kwarg = self.kwargs['pk']
 
-        conta = Conta.objects.filter(pk=pk_url_kwarg)[0]
+def teste(request):
+    print "AAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    html = urllib2.urlopen('http://reservascoopel.herokuapp.com/api/reserva')
+    data = ehojson.load(html)
+    data = data.replace("}{","},,{")
+    lista = data.split(",,")
 
-        conta.conclusao = datetime.now()
+    obj_banco = Validacao.objects.all()
+    l = list()
+    for i in obj_banco:
+        l.append(i.idObj)
 
-        conta.save()
+    for obj in lista:
+        data = ehojson.loads(obj)
+        a = Validacao()
+        a.validacao = data["VALIDACAO"]
+        a.tipo = data["TIPO"]
+        a.comentario = data["COMENTARIO"]
+        a.idObj = data["IDOBJ"]
+        if a.idObj not in l:
+            a.save()    
 
-        return super(ConcluirConta, self).get_redirect_url(*args, **kwargs)
-    
-    def get(self, request):
-        return JsonResponse({'teste':'teste'})
+    return JsonResponse('html', safe=False)
+
+class postteste(View):
+    def post(self, request, *args, **kwargs):
+        return HttpResponse('Hello, World!')
+
 
 class PaginaInicial(TemplateView):
     template_name = 'financeiro/pagina_inicial.html'
+
+
+
+
+
 
 class CadastroContaAPagar(FormView):
     template_name = 'financeiro/cadastro_conta_pagar.html' 
