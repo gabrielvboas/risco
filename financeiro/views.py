@@ -1,28 +1,65 @@
 from django.http import HttpResponse, JsonResponse
 from django.http.response import HttpResponseRedirect
 from django.template import RequestContext, loader
-from django.views.generic import FormView, UpdateView, TemplateView, ListView
+from django.views.generic import FormView, UpdateView, TemplateView, ListView, View
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.generic.base import RedirectView
 
 from forms import * 
 from financeiro.models import *
 from datetime import datetime
+from models import Validacao
+import urllib2
+import json as ehojson
 
 from django.views.generic import View
 #import pdb; pdb.set_trace()
 
 def json(request, tipo):
-
+    a = ''
     for obj in Validacao.objects.all():
         if obj.tipo == tipo:
-            a = obj.to_JSON()
+            a = a + obj.to_JSON()
 
     return JsonResponse(a, safe=False)
 
 
+def teste(request):
+    print "AAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    html = urllib2.urlopen('http://reservascoopel.herokuapp.com/api/reserva')
+    data = ehojson.load(html)
+    data = data.replace("}{","},,{")
+    lista = data.split(",,")
+
+    obj_banco = Validacao.objects.all()
+    l = list()
+    for i in obj_banco:
+        l.append(i.idObj)
+
+    for obj in lista:
+        data = ehojson.loads(obj)
+        a = Validacao()
+        a.validacao = data["VALIDACAO"]
+        a.tipo = data["TIPO"]
+        a.comentario = data["COMENTARIO"]
+        a.idObj = data["IDOBJ"]
+        if a.idObj not in l:
+            a.save()    
+
+    return JsonResponse('html', safe=False)
+
+class postteste(View):
+    def post(self, request, *args, **kwargs):
+        return HttpResponse('Hello, World!')
+
+
 class PaginaInicial(TemplateView):
     template_name = 'financeiro/pagina_inicial.html'
+
+
+
+
+
 
 class CadastroContaAPagar(FormView):
     template_name = 'financeiro/cadastro_conta_pagar.html' 
