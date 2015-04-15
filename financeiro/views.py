@@ -26,7 +26,7 @@ def json(request, tipo):
 
 def teste(request):
     print "AAAAAAAAAAAAAAAAAAAAAAAAAAA"
-    html = urllib2.urlopen('http://reservascoopel.herokuapp.com/api/reserva')
+    html = urllib2.urlopen('http://127.0.0.1:8000/financeiro/json/RESERVA/')
     data = ehojson.load(html)
     data = data.replace("}{","},,{")
     lista = data.split(",,")

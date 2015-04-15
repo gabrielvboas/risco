@@ -32,7 +32,6 @@ class Validacao(models.Model):
 
 
 class Relatorio(models.Model):
-<<<<<<< HEAD
 	aprovado = models.CharField(max_length=200)
 	descricao = models.CharField(max_length=200)
 	saldo = models.FloatField()
@@ -48,22 +47,6 @@ class Relatorio(models.Model):
 	
 	def __str__(self):
 		return str(self.id) + "_" + self.descricao
-=======
-    aprovado = models.BooleanField(default=False)
-    created_at = models.DateTimeField(editable=False)
-    updated_at = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        if not self.id:
-            self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
-        return super(Relatorio, self).save(*args, **kwargs)
-    
-    def __str__(self):
-        return self.nome + "_" + str(self.id) + + "_" + self.data.strftime('%d/%m/%y')
->>>>>>> b39444c3e0f5803c65d5e1588ce8b69e2ee8650e
-
 
 class Fornecedor(models.Model):
     ALIMENTICIO = 'ALIMENTICIO'
@@ -95,7 +78,6 @@ class Fornecedor(models.Model):
         return self.nome
 
 class ContaAPagar(models.Model):
-<<<<<<< HEAD
 	ESTOQUE = 'ESTOQUE'
 	OUTRAS = 'OUTRAS'
 
@@ -123,33 +105,6 @@ class ContaAPagar(models.Model):
 	
 	def __str__(self):
 		return str(self.id) + "_" + self.vencimento.strftime('%d/%m/%y')
-=======
-    ESTOQUE = 'ESTOQUE'
-    OUTRAS = 'OUTRAS'
-
-    TYPES = (
-        (ESTOQUE, "ESTOQUE"),
-        (OUTRAS, "OUTRAS"),
-        )
-    tipo = models.CharField(choices=TYPES, max_length=50)
-    valor = models.FloatField()
-    vencimento = models.DateTimeField()
-    conclusao = models.DateTimeField(null=True, blank=True, default = None)
-    relatorio = models.ForeignKey(Relatorio, null=True, blank=True, default = None)
-    fornecedor = models.ForeignKey(Fornecedor, null=True, blank=True, default = None)
-    created_at = models.DateTimeField(editable=False)
-    updated_at = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        ''' On save, update timestamps '''
-        if not self.id:
-            self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
-        return super(ContaAPagar, self).save(*args, **kwargs)
-    
-    def __str__(self):
-        return str(self.id) + "_" + self.vencimento.strftime('%d/%m/%y')
->>>>>>> b39444c3e0f5803c65d5e1588ce8b69e2ee8650e
 
 class Conta(models.Model):
     cpf = models.CharField(max_length=200)
