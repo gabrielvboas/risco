@@ -15,6 +15,6 @@ urlpatterns = patterns('',
     url(r'^listafornecedor/$', list.ListView.as_view(model=Fornecedor), name='lista_fornecedor'),
     url(r'^editafornecedor/(?P<pk>\d+)/$', views.EditarFornecedor.as_view(), name='edita_fornecedor'),
     url(r'^deletafornecedor/(?P<pk>\d+)/$', views.DeletarFornecedor.as_view(), name='deleta_fornecedor'),
-    url(r'^meujson/', views.json.as_view(), name='json'),
+    url(r'^json/(?P<tipo>\w{0,50})/$', views.json, name='json'),
     #url(r'^cliente/(?P<pk>\d+)/$', detail.DetailView.as_view(model=Cliente))
 )

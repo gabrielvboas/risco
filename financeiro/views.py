@@ -12,23 +12,14 @@ from datetime import datetime
 from django.views.generic import View
 #import pdb; pdb.set_trace()
 
+def json(request, tipo):
 
-class json(RedirectView):
-    url = reverse_lazy("financeiro:list_conta") # Url para redirecionamento
+    for obj in Validacao.objects.all():
+        if obj.tipo == tipo:
+            a = obj.to_JSON()
 
-    def get_redirect_url(self, *args, **kwargs):
-        pk_url_kwarg = self.kwargs['pk']
+    return JsonResponse(a, safe=False)
 
-        conta = Conta.objects.filter(pk=pk_url_kwarg)[0]
-
-        conta.conclusao = datetime.now()
-
-        conta.save()
-
-        return super(ConcluirConta, self).get_redirect_url(*args, **kwargs)
-    
-    def get(self, request):
-        return JsonResponse({'teste':'teste'})
 
 class PaginaInicial(TemplateView):
     template_name = 'financeiro/pagina_inicial.html'
