@@ -50,7 +50,7 @@ class CadastroContaAPagar(FormView):
 
 class EditarContaAPagar(UpdateView):
     template_name = 'financeiro/cadastro_conta_pagar.html' 
-    fields = ['valor', 'vencimento', 'forma_pagamento', 'nome', 'cpf', 'conta', 'agencia', 'banco']
+    fields = ['valor', 'vencimento', 'fornecedor']
     model = ContaAPagar
 
     success_url = reverse_lazy('financeiro:lista_conta_pagar')
@@ -132,3 +132,59 @@ class ItensContaAPagar(ListView):
         context['conta'] = ContaAPagar.objects.filter(pk=pk_url_kwarg)
 
         return context
+
+class RequisicaoRelatorio(FormView):
+    template_name = 'financeiro/requisicao_relatorio.html' 
+    success_url = reverse_lazy('financeiro:mostra_relatorio')
+    form_class = RequisicaoRelatorioForm
+
+    def form_valid(self, form):
+        #pegar dados das contas entre as datas
+
+        relat = Relatorio.objects.filter()
+        for r in relat:
+            r.delete()
+
+        relatorio = Relatorio()
+
+        conta = ContaAPagar.objects.filter(vencimento__gte=datetime.strptime(form.cleaned_data['data_inicio'], '%d/%M/%Y').date(), vencimento__lte=datetime.strptime(form.cleaned_data['data_fim'], '%d/%M/%Y').date(), conclusao__isnull=False)
+        saldo = 0
+
+        for item in conta:
+            saldo = saldo + item.valor
+
+        relatorio.aprovado = "sim"
+        relatorio.saldo = saldo
+        relatorio.descricao = "Gastos"
+        #import pdb; pdb.set_trace()
+        relatorio.save()
+        #passar conta para a classe seguinte
+        
+        #saldo = 0
+        #reserva = Reservation.objects.filter(data_inicio_reserva__gte=datetime.strptime(form.cleaned_data['data_inicio'], '%d/%M/%Y').date(), data_inicio_reserva__lte=datetime.strptime(form.cleaned_data['data_fim'], '%d/%M/%Y').date())
+        #valor_estadia
+        #for item in reserva:
+        #    saldo = saldo + reserva.valor_estadia
+
+        #pgtoCheckout = CheckoutPayment.objects.filter(data_pagamento__gte=datetime.strptime(form.cleaned_data['data_inicio'], '%d/%M/%Y').date(), data_pagamento__lte=datetime.strptime(form.cleaned_data['data_fim'], '%d/%M/%Y').date())
+        #valor_pagamento 
+        #for item in reserva:
+        #    saldo = saldo + pgtoCheckout.valor_pagamento        
+
+        #relatorio.aprovado = "sim"
+        #relatorio.saldo = saldo
+        #relatorio.descricao = "Recebido"
+
+        #relatorio.save()
+
+        return HttpResponseRedirect(self.success_url) 
+
+#class MostraRelatorio(ListView):
+#    template_name = 'financeiro/mostra_relatorio.html'
+#    model = Relatorio
+
+#    def get_context_data(self, *args, **kwargs):
+
+        #colocar valores da conta na tabela 
+
+#        return #conta

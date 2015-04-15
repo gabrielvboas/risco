@@ -22,7 +22,7 @@
                                 <td>{{ nome.valor }}</td>
                                 <td>{{ nome.vencimento|date:"d/m/Y" }}</td>
                                 <td>{% if nome.fornecedor %} {{ nome.fornecedor.nome }} {% else %}-{% endif %}</td>
-                                <td>{% if nome.conclusao %}{{ nome.vencimento|date:"d/m/Y" }}
+                                <td>{% if nome.conclusao %}{{ nome.conclusao|date:"d/m/Y" }}
                                 {% else %} - {% endif %}</td>
                                 <td>
                                         {% if nome.tipo = 'OUTRAS' %}

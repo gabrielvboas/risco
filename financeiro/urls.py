@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 from financeiro import views
 from django.views.generic import list, detail
-from financeiro.models import Fornecedor, ContaAPagar, Conta
+from financeiro.models import Fornecedor, ContaAPagar, Conta, Relatorio
 
 
 urlpatterns = patterns('',
@@ -16,5 +16,7 @@ urlpatterns = patterns('',
     url(r'^editafornecedor/(?P<pk>\d+)/$', views.EditarFornecedor.as_view(), name='edita_fornecedor'),
     url(r'^deletafornecedor/(?P<pk>\d+)/$', views.DeletarFornecedor.as_view(), name='deleta_fornecedor'),
     url(r'^meujson/', views.json.as_view(), name='json'),
+    url(r'^requisicaoRelatorio/', views.RequisicaoRelatorio.as_view(), name='requisicao_relatorio'),
+    url(r'^relatorio/$', list.ListView.as_view(model=Relatorio), name='mostra_relatorio'),
     #url(r'^cliente/(?P<pk>\d+)/$', detail.DetailView.as_view(model=Cliente))
 )

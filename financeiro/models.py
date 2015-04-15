@@ -20,7 +20,9 @@ class Validacao(models.Model):
 		return self.tipo + "_" + str(self.idObj) 
 
 class Relatorio(models.Model):
-	aprovado = models.BooleanField(default=False)
+	aprovado = models.CharField(max_length=200)
+	descricao = models.CharField(max_length=200)
+	saldo = models.FloatField()
 	created_at = models.DateTimeField(editable=False)
 	updated_at = models.DateTimeField()
 
@@ -32,7 +34,7 @@ class Relatorio(models.Model):
 		return super(Relatorio, self).save(*args, **kwargs)
 	
 	def __str__(self):
-		return self.nome + "_" + str(self.id) + + "_" + self.data.strftime('%d/%m/%y')
+		return str(self.id) + "_" + self.descricao
 
 
 class Fornecedor(models.Model):
@@ -87,6 +89,8 @@ class ContaAPagar(models.Model):
 			self.created_at = datetime.datetime.now()
 		self.updated_at = datetime.datetime.now()
 		return super(ContaAPagar, self).save(*args, **kwargs)
+	
+		
 	
 	def __str__(self):
 		return str(self.id) + "_" + self.vencimento.strftime('%d/%m/%y')

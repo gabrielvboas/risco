@@ -1,7 +1,7 @@
 {% block content %}
         <h1>Lista de Itens da Conta {{conta.pk}}</h1>
 
-                {% if items %}
+                {% if object_list %}
                 <table>
                         <tr>
                                 <th>Descrição</th>
@@ -9,7 +9,7 @@
                                 <th>Quantidade</th>
                         </tr>
                 {% endif %}
-                {% for items in items %}
+                {% for items in object_list %}
                         <tr>
                                 <td>{{ items.descricao }}</td>
                                 <td>{{ items.valor }}</td>

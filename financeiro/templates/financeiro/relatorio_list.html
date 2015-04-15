@@ -1,0 +1,23 @@
+{% block content %}
+        <h1>Relatorio</h1>
+
+                {%  if object_list %}
+                <table>
+                        <tr>
+                                <th>Descricao</th>
+                                <th>Saldo</th>
+                                <th>Aprovado</th>                                
+                        </tr>
+                {% endif %}
+                {% for item in object_list %}
+                        <tr>
+                                <td>{{ item.descricao }}</td>
+                                <td>{{ item.saldo }}</td>
+                                <td>{{ item.aprovado }}</td>
+                        </tr>
+                {% empty %}
+                        <li>Sem itens na lista.</li>
+                {% endfor %}
+                </table>
+                <p><a href="{% url 'financeiro:mostra_relatorio' %}">Retornar</a></p>
+{% endblock content %}
